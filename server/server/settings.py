@@ -137,7 +137,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
 )
+
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 with open('client_id.json', 'r') as f:
     GOOGLE_PLUS = json.load(f)
 
