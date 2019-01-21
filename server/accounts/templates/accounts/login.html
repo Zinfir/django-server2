@@ -1,33 +1,35 @@
-{% extends 'server/master.html' %}
-
 {% load static %}
 
-{% block title %}
-Login
-{% endblock %}
-
-{% block content %}
-
-{% include 'server/components/inc_menu.html' %}
-
-<form action="/accounts/" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input name="username" type="text">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body class="text-center">
+    <div class="d-flex justify-content-center">
+        
+        <form action="/accounts/" method="POST">
+            <a href="{% url 'main:main' %}"><img class="img-thumbnail mb-3 mt-5" src="{% static 'server/img/logo.png' %}" alt="logo"></a>
+            {% csrf_token %}
+            <div class="form-group ">
+                <input class="form-control" name="username" type="text" placeholder="Username">
+            </div>
+            <div class="form-group ">
+                <input class="form-control" name="password" type="password" placeholder="Password">
+            </div>
+    
+            <input class="btn btn-secondary" type="submit" value="Sign in">
+            <a class="btn btn-outline-secondary" href="{% url 'accounts:registration' %}" role="button" > Registration </a>
+            <a class="btn btn-danger" href="{% url 'social:begin' 'google-oauth2' %}?next=/" role="button"> Google+ Sign in </a>
+    
+        </form>
     </div>
-    <div class="form-group">
-            <label for="password">Password</label>
-            <input name="password" type="password">
-    </div>
-    <input type="submit" value="Submit">
-    <button value="Registration">
-        <a href="{% url 'accounts:registration' %}">Registration</a>
-    </button>
-    <button class = "btn btn-round form-control" >
-    <a href = "{% url 'social:begin' 'google-oauth2' %}?next=/" >
-    Google+ sign in
-    </a >
-    </button >
-</form>
-{% endblock %}
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

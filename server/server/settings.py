@@ -173,3 +173,9 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+BOOTSTRAP3 = {
+    "error_css_class": "bootstrap3-error",
+    "required_css_class": "bootstrap3-required",
+    "javascript_in_head": True,
+}
