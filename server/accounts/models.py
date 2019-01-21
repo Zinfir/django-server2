@@ -2,10 +2,11 @@ from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from datetime import timedelta
+from images.models import Image
 
 class Account(AbstractUser):
     avatar = models.ForeignKey(
-        'images.Image',
+        Image,
         on_delete=models.PROTECT,
         blank=True,
         null=True

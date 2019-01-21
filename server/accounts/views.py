@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from accounts.forms import Account_Form, Registration_Form, Registration_Model_Form
 from accounts.models import Account
 from server import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import random, hashlib
 
 def profile(request, pk):
@@ -23,7 +23,7 @@ def login_view(request):
         user = authenticate(username=usr, password=psw)
 
         if user and user.is_active:
-            login(request, user , backend= 'django.contrib.auth.backends.ModelBackend' )
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend' )
             return redirect(success_url)
 
     return render(request, 'accounts/login.html')
@@ -43,13 +43,13 @@ def confirm_account(request):
     return redirect(success_url)
 
 
-def verify(request):
+def verify(request, email, activation_key):
     try:
         user = Account.objects.get(email=email)
         if user.activation_key == activation_key and not user.is_activation_key_expired():
             user.is_active=True
             user.save()
-            auth.login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return render(request, 'authapp/verification.html')
         else:
             print( f'error activation user: {user} ' )
@@ -65,17 +65,16 @@ def registration(request):
     form = Registration_Model_Form(request.POST)
     if request.method == 'POST':
         form = Registration_Model_Form(data=request.POST)
-
         if form.is_valid():
             user = form.save()
             salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
             user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
-            verify_link = reverse('accounts:verify' , args=[user.email, user.activation_key])
-            login(request, user)
+            verify_link = reverse('accounts:verify', args=[user.email, user.activation_key])
+            login(request, user, backend = 'django.contrib.auth.backends.ModelBackend')
 
             send_mail(
                 'Registration User',
-                f'Для подтверждения учетной записи {user.username} на портале \ перейдите по ссылке: http://localhost:8000/{verify_link}',
+                f'Для подтверждения учетной записи {user.username} на портале \ перейдите по ссылке: http://localhost:8000{verify_link}',
                 from_email='info@project.ru',
                 recipient_list=[user.email],
                 fail_silently=False

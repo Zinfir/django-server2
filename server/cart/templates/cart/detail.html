@@ -1,0 +1,32 @@
+{% extends 'server/master.html' %}
+
+{% load static %}
+
+{% block title %} 
+    Purchase Detail
+{% endblock %}
+   
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'server/style.css' %}">
+{% endblock %}
+    
+{% block content %}
+
+{% include 'server/components/inc_menu.html' %}
+<h3>Purchase Detail:</h3>
+
+{{ object }}
+<ul>
+    {% for item in object.items.all  %}
+    <li>
+        <span>
+            {{ item.product.name }}: &nbsp;
+        </span>
+        <span>
+            {{ item.value }}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,10 +1,12 @@
 from django.db import models
 from django.urls import reverse_lazy
+from images.models import Image
+from product_list.models import Product_Category
 
 
 class Product(models.Model):
     product_category = models.ForeignKey(
-        'product_list.Product_Category',
+        Product_Category,
         on_delete = models.CASCADE
         )
     name = models.CharField(
@@ -13,7 +15,7 @@ class Product(models.Model):
         unique = True,
         )
     image = models.ForeignKey(
-        'images.Image',
+        Image,
         on_delete=models.PROTECT,
     )
     short_desc = models.CharField(

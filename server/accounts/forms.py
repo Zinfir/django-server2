@@ -18,7 +18,8 @@ class BaseRegistrationForm(UserCreationForm):
         obj = super(BaseRegistrationForm, self).save(commit=False)
         password = self.cleaned_data.get('password')
 
-        obj.is_active=False
+        obj.is_active=True
+        #obj.is_active=False
         obj.set_password(password)
 
         if commit:

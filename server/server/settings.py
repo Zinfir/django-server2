@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'product_list',
     'product_detail',
     'social_django',
+    'cart',
 
     'rest_framework',
     'django.contrib.admin',

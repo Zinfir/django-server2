@@ -40,7 +40,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('default_api/', include(default_router)),
     path('api/', include(router.urls)),
-    path('auth/oauth2/', include('social_django.urls'))
+    path('auth/oauth2/', include('social_django.urls')),
+    path('cart/', include('cart.urls')),
 ]
 
 
