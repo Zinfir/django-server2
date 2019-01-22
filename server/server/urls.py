@@ -27,7 +27,9 @@ router.register('categories', CategoryViewSet)
 router.register('products', ProductViewSet)
 
 default_router = [
-    path('categories/', include('product_list.endpoints.categories'))
+    path('categories/', include('product_list.endpoints.categories')),
+    path('product_detail/', include('product_detail.routes')),
+    path('cart/', include('cart.routes')),
 ] 
 
 urlpatterns = [

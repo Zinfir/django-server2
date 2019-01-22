@@ -9,6 +9,9 @@ from django.views.generic import (
     ListView, DetailView, CreateView, 
     UpdateView, DeleteView
 )
+from django.http import JsonResponse
+from functools import reduce
+from django.db.models import Q
 from accounts.mixins import AdminGroupRequired
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -150,3 +153,31 @@ def product_delete(request, pk):
         return redirect(success_url)
 
     return render(request, template_name, {'instance': obj})
+
+
+def product_json_list(request):
+    query_params = (
+        (key, list(map(int, value.split(','))) if key.endswith('_in') else value)
+        for key, value in request.GET.items()
+    )
+    query = get_list_or_404(
+        Product,
+        reduce(
+            lambda store, itm: store | Q(**{itm[0]: itm[1]}),
+            query_params,
+            Q()
+        )
+    )
+
+    return JsonResponse(
+        list(
+            map(
+                lambda itm: {
+                    'id': itm.id,
+                    'name': itm.name
+                },
+                query
+            )
+        ),
+        safe=False
+    )
