@@ -27,7 +27,7 @@ class ProductListView(LoginRequiredMixin, ListView):
     paginate_by = 6
 
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(DetailView):
     model = Product
     template_name = "product_detail/product_detail.html"
     context_object_name = 'instance'

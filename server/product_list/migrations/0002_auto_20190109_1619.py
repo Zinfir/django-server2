@@ -22,7 +22,7 @@ def populate_data_base(apps, schema_editor):
 
 
     for data in categories:
-        category = Product_Category(name=data["name"], description=data["description"], href=data["href"])
+        category = Product_Category(name=data["name"], description=data["description"])
         category.save()
 
     products = []
